@@ -10,11 +10,28 @@ import { BookService } from './book.service';
 })
 export class AppComponent implements OnInit {
   public books: Book[] | undefined;
+  public displayModal: Boolean = false;
+  public selectedBook: Book | undefined;
 
   constructor(private bookService: BookService) {}
 
   ngOnInit(): void {
     this.getAllBooks();
+  }
+
+  // "newBook" is going to tell me wether the user is trying to add or edit a book
+  public onOpenModal(book: Book | undefined): void {
+    this.displayModal = true;
+    if (book) {
+      this.selectedBook = book;
+    }
+    console.log(this.displayModal);
+    console.log(this.selectedBook);
+  }
+
+  public onCloseModal(): void {
+    this.displayModal = false;
+    this.selectedBook = undefined;
   }
 
   public getAllBooks(): void {
