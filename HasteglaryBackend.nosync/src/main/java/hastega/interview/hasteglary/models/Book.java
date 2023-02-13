@@ -20,7 +20,6 @@ public class Book implements Serializable{
     @Column(nullable = false, updatable = false)
     // the isbn will never change, and mustn't change.
     private String addedDate;
-    private String deletedDate;
     private String story;
     private int reads;
 
@@ -33,7 +32,6 @@ public class Book implements Serializable{
         this.title = title;
         this.author = author;
         this.addedDate = addedDate;
-        this.deletedDate = deletedDate;
         this.story = story;
         this.reads = reads;
     }
@@ -69,14 +67,6 @@ public class Book implements Serializable{
 
     public void setAddedDate(String addedDate) {
         this.addedDate = addedDate;
-    }
-
-    public String getDeletedDate() {
-        return deletedDate;
-    }
-
-    public void setDeletedDate(String deletedDate) {
-        this.deletedDate = deletedDate;
     }
 
     public String getStory() {
