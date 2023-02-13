@@ -1,6 +1,6 @@
 # Hasteglary
 ## DESCRIPTION
-Implement a simple web application to manage your library. Users can add, modify, and remove books from their library. In addition, each user wants to keep track of the number of readings for each book.
+A simple web application to manage your library. Users can add, modify, and remove books from their library. In addition, each user wants to keep track of the number of readings for each book.
 
 ## Entity Description
 Each book is identified by the following attributes:
