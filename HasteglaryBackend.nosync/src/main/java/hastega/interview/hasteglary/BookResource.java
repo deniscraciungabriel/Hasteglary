@@ -48,5 +48,11 @@ public class BookResource {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/modify-reads/{isbn}/{read}")
+    public ResponseEntity<Book> modifyReads(@PathVariable("isbn") String isbn, @PathVariable("read") int read){
+        Book book = bookService.modifyReads(isbn, read);
+        return new ResponseEntity<>(book, HttpStatus.OK);
+    }
+
 }
 

@@ -13,6 +13,7 @@
             id="isbnInput"
             ngModel="{{book?.isbn}}"
             required
+            [readonly]="book?.isbn ? true : false"
           />
         </div>
         <div class="form-group">

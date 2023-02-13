@@ -27,6 +27,8 @@
         [book]="selectedBook"
       ></app-delete-modal>
 
+      <p *ngIf="empty">No books added</p>
+
       <div class="book-grid">
         <!--BOOK-->
         <div *ngFor="let book of books" class="book-square">
@@ -36,8 +38,12 @@
             <p class="book-author">{{book.author}}</p>
             <p class="book-count">Reading Count: {{book.reads}}</p>
             <div class="book-actions">
-              <button class="increase-count">+</button>
-              <button class="decrease-count">-</button>
+              <button class="increase-count" (click)="onAddReads(book, +1)">
+                +
+              </button>
+              <button class="decrease-count" (click)="onAddReads(book, -1)">
+                -
+              </button>
             </div>
           </div>
           <div class="book-actions">

@@ -21,6 +21,8 @@ export class BookService {
   }
 
   public addBook(book: Book): Observable<Book> {
+    // convert date in readable format
+    book.addedDate = new Date().toISOString().substring(0, 10);
     return this.http.post<Book>(`${this.apiServerUr1}/books/add`, book);
   }
 
@@ -28,10 +30,10 @@ export class BookService {
     return this.http.delete<void>(`${this.apiServerUr1}/books/delete/${isbn}`);
   }
 
-  //   public modifyReads(isbn: string, reads: number): Observable<Book> {
-  //     return this.http.put<Book>(
-  //       `${this.apiServerUr1}/books/modify-reads/${isbn}/${reads}`,
-  //       null
-  //     );
-  //   }
+  public modifyReads(isbn: string, reads: number): Observable<Book> {
+    return this.http.post<Book>(
+      `${this.apiServerUr1}/books/modify-reads/${isbn}/${reads}`,
+      null
+    );
+  }
 }

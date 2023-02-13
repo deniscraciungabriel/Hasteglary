@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   public books: Book[] | undefined;
   public displayModal: Boolean = false;
   public displayDeleteModal: Boolean = false;
+  public empty: Boolean = false;
   public selectedBook: Book | undefined;
 
   constructor(private bookService: BookService) {}
@@ -20,21 +21,36 @@ export class AppComponent implements OnInit {
     this.getAllBooks();
   }
 
+  // opens the modal that allows you to save or edit a book
   public onOpenSaveModal(book: Book | undefined): void {
     this.displayModal = true;
+    // if there's a book passed, we are editing it, so we are selecting it
     if (book) {
       this.selectedBook = book;
     }
-    console.log(this.displayModal);
-    console.log(this.selectedBook);
   }
 
+  // opens the modal that allows you to delete a book
   public onOpenDeleteModal(book: Book): void {
     this.displayDeleteModal = true;
     this.selectedBook = book;
-    console.log(this.selectedBook);
   }
 
+  public onAddReads(book: Book, n: number): void {
+    this.bookService.modifyReads(book.isbn, book.reads + n).subscribe({
+      next: (response: Book) => {
+        console.log('modified successfully: ', response);
+        // refreshes
+        this.getAllBooks();
+      },
+      error: (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+      complete: () => console.log('Modified book'),
+    });
+  }
+
+  // closes all modals
   public onCloseModal(): void {
     this.displayModal = false;
     this.displayDeleteModal = false;
@@ -42,12 +58,32 @@ export class AppComponent implements OnInit {
   }
 
   public onBookSave(book: Book): void {
-    console.log('saving: ', book);
+    this.bookService.addBook(book).subscribe({
+      next: (response: Book) => {
+        console.log('saved successfully: ', response);
+        // refreshes
+        this.getAllBooks();
+      },
+      error: (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+      complete: () => console.log('Saved book'),
+    });
     this.onCloseModal();
   }
 
   public onBookDelete(book: Book): void {
-    console.log('deleting: ', book);
+    this.bookService.deleteBook(book.isbn).subscribe({
+      next: () => {
+        console.log('deleted successfully');
+        // refreshes
+        this.getAllBooks();
+      },
+      error: (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+      complete: () => console.log('Deleted book'),
+    });
     this.onCloseModal();
   }
 
@@ -55,6 +91,11 @@ export class AppComponent implements OnInit {
     this.bookService.getAllBooks().subscribe({
       next: (response: Book[]) => {
         this.books = response;
+
+        // if there are no books make empty true
+        if (response.length === 0) {
+          this.empty = true;
+        }
       },
       error: (error: HttpErrorResponse) => {
         alert(error.message);

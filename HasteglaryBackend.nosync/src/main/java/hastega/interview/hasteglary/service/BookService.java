@@ -28,7 +28,7 @@ public class BookService {
 
     // fetch all books form the database
     public List<Book> getAllBooks(){
-        return bookRepo.findAll();
+        return bookRepo.findAllByOrderByAddedDateDesc();
     }
 
     // find a book in the database
@@ -56,7 +56,11 @@ public class BookService {
     }
 
     // modify number of reads for a book
-    // public Book modifyReads(String isbn, int read){}
+    public Book modifyReads(String isbn, int read){
+        Book book = bookRepo.findBookByIsbn(isbn).orElseThrow(() -> new BookNotFoundException("No book found"));
+        book.setReads(read);
+        return bookRepo.save(book);
+    }
 
 
 }
