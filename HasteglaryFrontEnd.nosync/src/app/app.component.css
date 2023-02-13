@@ -86,10 +86,30 @@ h1 {
   cursor: pointer;
 }
 
+.book-actions .increase-count:hover {
+  background-color: #2e7d32;
+}
+
+.book-actions .decrease-count:hover {
+  background-color: #2e7d32;
+}
+
+.add-book:hover {
+  background-color: #2e7d32;
+}
+
 .book-actions .edit-book {
   background-color: #ff9800;
 }
 
+.book-actions .edit-book:hover {
+  background-color: #ff6f00;
+}
+
 .book-actions .delete-book {
   background-color: #f44336;
+}
+
+.book-actions .delete-book:hover {
+  background-color: #c62828;
 }

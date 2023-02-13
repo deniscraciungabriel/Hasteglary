@@ -9,24 +9,28 @@
     <div class="container">
       <h1>Hasteglary</h1>
 
-      <button class="add-book" (click)="onOpenModal(undefined)">
+      <button class="add-book" (click)="onOpenSaveModal(undefined)">
         Add Book
       </button>
 
       <app-new-book-modal
         *ngIf="displayModal"
         (closeModalEvent)="onCloseModal()"
+        (saveBookEvent)="onBookSave($event)"
         [book]="selectedBook"
       ></app-new-book-modal>
+
+      <app-delete-modal
+        *ngIf="displayDeleteModal"
+        (closeModalEvent)="onCloseModal()"
+        (deleteBookEvent)="onBookDelete($event)"
+        [book]="selectedBook"
+      ></app-delete-modal>
 
       <div class="book-grid">
         <!--BOOK-->
         <div *ngFor="let book of books" class="book-square">
-          <img
-            src="../assets/images/bookCover.png"
-            alt="Default Book Cover"
-            (click)="onOpenModal(book)"
-          />
+          <img src="../assets/images/bookCover.png" alt="Default Book Cover" />
           <div class="book-info">
             <p class="book-name">{{book.title}}</p>
             <p class="book-author">{{book.author}}</p>
@@ -37,8 +41,12 @@
             </div>
           </div>
           <div class="book-actions">
-            <button class="edit-book" (click)="onOpenModal(book)">Edit</button>
-            <button class="delete-book">Delete</button>
+            <button class="edit-book" (click)="onOpenSaveModal(book)">
+              Edit
+            </button>
+            <button class="delete-book" (click)="onOpenDeleteModal(book)">
+              Delete
+            </button>
           </div>
         </div>
         <!--END BOOK-->

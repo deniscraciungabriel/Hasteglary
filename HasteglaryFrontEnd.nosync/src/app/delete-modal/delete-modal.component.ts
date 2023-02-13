@@ -3,20 +3,20 @@ import { NgForm } from '@angular/forms';
 import { Book } from '../book';
 
 @Component({
-  selector: 'app-new-book-modal',
-  templateUrl: './new-book-modal.component.html',
-  styleUrls: ['./new-book-modal.component.css'],
+  selector: 'app-delete-modal',
+  templateUrl: './delete-modal.component.html',
+  styleUrls: ['./delete-modal.component.css'],
 })
-export class NewBookModalComponent {
+export class DeleteModalComponent {
   @Input() book: Book | undefined;
   @Output() closeModalEvent = new EventEmitter<boolean>();
-  @Output() saveBookEvent = new EventEmitter<Book>();
+  @Output() deleteBookEvent = new EventEmitter<Book>();
 
   public onCloseModal(): void {
     this.closeModalEvent.emit(false);
   }
 
-  public onAddBook(bookForm: NgForm): void {
-    this.saveBookEvent.emit(bookForm.value);
+  public onDeleteBook(): void {
+    this.deleteBookEvent.emit(this.book);
   }
 }

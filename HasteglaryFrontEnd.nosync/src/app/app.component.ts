@@ -11,6 +11,7 @@ import { BookService } from './book.service';
 export class AppComponent implements OnInit {
   public books: Book[] | undefined;
   public displayModal: Boolean = false;
+  public displayDeleteModal: Boolean = false;
   public selectedBook: Book | undefined;
 
   constructor(private bookService: BookService) {}
@@ -19,8 +20,7 @@ export class AppComponent implements OnInit {
     this.getAllBooks();
   }
 
-  // "newBook" is going to tell me wether the user is trying to add or edit a book
-  public onOpenModal(book: Book | undefined): void {
+  public onOpenSaveModal(book: Book | undefined): void {
     this.displayModal = true;
     if (book) {
       this.selectedBook = book;
@@ -29,9 +29,26 @@ export class AppComponent implements OnInit {
     console.log(this.selectedBook);
   }
 
+  public onOpenDeleteModal(book: Book): void {
+    this.displayDeleteModal = true;
+    this.selectedBook = book;
+    console.log(this.selectedBook);
+  }
+
   public onCloseModal(): void {
     this.displayModal = false;
+    this.displayDeleteModal = false;
     this.selectedBook = undefined;
+  }
+
+  public onBookSave(book: Book): void {
+    console.log('saving: ', book);
+    this.onCloseModal();
+  }
+
+  public onBookDelete(book: Book): void {
+    console.log('deleting: ', book);
+    this.onCloseModal();
   }
 
   public getAllBooks(): void {
