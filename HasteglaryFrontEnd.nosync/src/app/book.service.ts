@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Book } from './book';
 import { environment } from 'src/environments/environment';
@@ -13,7 +13,13 @@ export class BookService {
   constructor(private http: HttpClient) {}
 
   public getAllBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.apiServerUr1}/books/get-all`);
+    return this.http.get<Book[]>(`${this.apiServerUr1}/books/get-all`).pipe(
+      catchError((error) => {
+        console.log(error);
+        console.error("You don't have permission to access this resource");
+        return [];
+      })
+    );
   }
 
   public findBookByIsbn(isbn: string): Observable<Book> {
@@ -30,9 +36,9 @@ export class BookService {
     return this.http.delete<void>(`${this.apiServerUr1}/books/delete/${isbn}`);
   }
 
-  public modifyReads(isbn: string, reads: number): Observable<Book> {
+  public modifyReads(isbn: string, n: number): Observable<Book> {
     return this.http.post<Book>(
-      `${this.apiServerUr1}/books/modify-reads/${isbn}/${reads}`,
+      `${this.apiServerUr1}/books/modify-reads/${isbn}/${n}`,
       null
     );
   }
