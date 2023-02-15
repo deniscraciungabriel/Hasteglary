@@ -8,14 +8,13 @@ Each book is identified by the following attributes:
 - Author
 - ISBN code
 - Date added to the library
-- Date of deletion (if deleted)
+- Owner
 - Plot
 - Number of complete readings
 
 The user is instead identified by:
-- Name
-- Surname
-- Email
+- Username
+- Password
 
 ## Technical specifications
 The application consists of a server part (BE) and a client part (FE).
@@ -33,5 +32,11 @@ The Backend exposes some APIs that allow the Frontend to access the data stored 
 - BACKEND: SpringBoot
 - FRONTEND: Angular
 - DATABASE: PostgreSQL
+
+# How to use
+- Set up your own postgre database in the application.properties file
+- Create a "book" and a "user_table" tables with the appropriate fields
+- Run the backend server on port 8080
+- Run the frontend server on port 4200
 
 
