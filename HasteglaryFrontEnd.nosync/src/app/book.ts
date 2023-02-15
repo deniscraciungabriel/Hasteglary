@@ -16,4 +16,5 @@ export interface Book {
   addedDate: string;
   story: string;
   reads: number;
+  owner: string;
 }

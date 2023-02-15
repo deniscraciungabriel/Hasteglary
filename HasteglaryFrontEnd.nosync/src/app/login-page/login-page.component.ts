@@ -18,33 +18,26 @@ export class LoginPageComponent {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
-
   // send request to /books/get-all with the username and the password in the authorization
   public onLogin(loginForm: NgForm) {
-    console.log('Logging in with: ', loginForm.value);
-
     // localhost:8080/login gives 302 even if login is right because i need to set
     // a default success action, which i don't have time to do now so i will just check
     // if this credentials allow me to fetch the books, which means that the user is right
-
     this.bookService.getAllBooks(loginForm.value).subscribe({
       next: (response: Book[]) => {
+        // save the user
         localStorage.setItem('user', JSON.stringify(loginForm.value));
         this.router.navigate(['/home']);
       },
       error: (error: HttpErrorResponse) => {
-        // i don't understnad how this can happen
-        if (error.status === 200) {
-          localStorage.setItem('user', JSON.stringify(loginForm.value));
-          this.router.navigate(['/home']);
-        }
+        alert(error);
+        // clear values in registration form
+        loginForm.reset();
       },
     });
   }
 
   public onRegistration(registrationForm: NgForm): void {
-    console.log(registrationForm.value);
     this.userService.registerUser(registrationForm.value).subscribe({
       next: (response: any) => {
         console.log(response);

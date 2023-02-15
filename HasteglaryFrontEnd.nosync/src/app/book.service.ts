@@ -8,7 +8,6 @@ import {
 import { Book } from './book';
 import { environment } from 'src/environments/environment';
 import { User } from './user';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,13 +19,13 @@ export class BookService {
 
   public getAllBooks(user: User): Observable<Book[]> {
     const headers = new HttpHeaders({
-      Authorization: `Basic ${btoa('${user.username}:${user.password}')}`,
+      Authorization: `Basic ${btoa(`${user.username}:${user.password}`)}`,
     });
     return this.http
       .get<Book[]>(`${this.apiServerUr1}/books/get-all`, { headers })
       .pipe(
-        catchError((error: HttpErrorResponse) => {
-          console.log('ERROR: ', error);
+        catchError((error: any) => {
+          console.error('ERROR: ', error);
           return [];
         })
       );
@@ -34,34 +33,42 @@ export class BookService {
 
   public findBookByIsbn(isbn: string, user: User): Observable<Book> {
     const headers = new HttpHeaders({
-      Authorization: `Basic ${btoa('${user.username}:${user.password}')}`,
+      Authorization: `Basic ${btoa(`${user.username}:${user.password}`)}`,
     });
-    return this.http.get<Book>(`${this.apiServerUr1}/books/get/${isbn}`);
+    return this.http.get<Book>(`${this.apiServerUr1}/books/get/${isbn}`, {
+      headers,
+    });
   }
 
   public addBook(book: Book, user: User): Observable<Book> {
     const headers = new HttpHeaders({
-      Authorization: `Basic ${btoa('${user.username}:${user.password}')}`,
+      Authorization: `Basic ${btoa(`${user.username}:${user.password}`)}`,
     });
     // convert date in readable format
     book.addedDate = new Date().toISOString().substring(0, 10);
-    return this.http.post<Book>(`${this.apiServerUr1}/books/add`, book);
+    book.owner = user.username;
+    return this.http.post<Book>(`${this.apiServerUr1}/books/add`, book, {
+      headers,
+    });
   }
 
   public deleteBook(isbn: string, user: User): Observable<void> {
     const headers = new HttpHeaders({
-      Authorization: `Basic ${btoa('${user.username}:${user.password}')}`,
+      Authorization: `Basic ${btoa(`${user.username}:${user.password}`)}`,
     });
-    return this.http.delete<void>(`${this.apiServerUr1}/books/delete/${isbn}`);
+    return this.http.delete<void>(`${this.apiServerUr1}/books/delete/${isbn}`, {
+      headers,
+    });
   }
 
   public modifyReads(isbn: string, n: number, user: User): Observable<Book> {
     const headers = new HttpHeaders({
-      Authorization: `Basic ${btoa('${user.username}:${user.password}')}`,
+      Authorization: `Basic ${btoa(`${user.username}:${user.password}`)}`,
     });
     return this.http.post<Book>(
       `${this.apiServerUr1}/books/modify-reads/${isbn}/${n}`,
-      null
+      null,
+      { headers }
     );
   }
 }

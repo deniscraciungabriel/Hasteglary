@@ -10,6 +10,7 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
 import { RouterModule } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { InfoModalComponent } from './info-modal/info-modal.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
     DeleteModalComponent,
     HomeScreenComponent,
     LoginPageComponent,
+    InfoModalComponent,
   ],
   imports: [
     BrowserModule,

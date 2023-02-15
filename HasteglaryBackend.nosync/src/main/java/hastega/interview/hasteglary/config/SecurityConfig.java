@@ -45,7 +45,6 @@ public class SecurityConfig{
                 // .requestMatchers("/books/get-all").permitAll()
                 // .requestMatchers("/users/get-all").permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin()
                 .and().httpBasic();
         return http.build();
     }

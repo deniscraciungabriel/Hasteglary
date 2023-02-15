@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Book } from '../book';
 import { BookService } from '../book.service';
 import { User } from '../user';
@@ -13,16 +14,27 @@ export class HomeScreenComponent {
   public books: Book[] | undefined;
   public displayModal: Boolean = false;
   public displayDeleteModal: Boolean = false;
+  public displayInfoModal: Boolean = false;
   public empty: Boolean = false;
   public selectedBook: Book | undefined;
   public user: User | undefined;
 
-  constructor(private bookService: BookService) {}
+  constructor(private bookService: BookService, private router: Router) {}
 
   ngOnInit(): void {
+    // if there's no user, you can't be here
+    if (!JSON.parse(localStorage.getItem('user')!)) {
+      this.router.navigate(['/']);
+    }
+
     this.user = JSON.parse(localStorage.getItem('user')!);
-    console.log('USER: ', this.user);
+
     this.getAllBooks();
+  }
+
+  public onLogout(): void {
+    localStorage.removeItem('user');
+    this.router.navigate(['/']);
   }
 
   // opens the modal that allows you to save or edit a book
@@ -40,7 +52,15 @@ export class HomeScreenComponent {
     this.selectedBook = book;
   }
 
+  // opens the modal that allows you to see the info of a book
+  public onOpenInfoModal(book: Book): void {
+    this.selectedBook = book;
+    this.displayInfoModal = true;
+  }
+
+  // add or subtract reads
   public onAddReads(book: Book, n: number): void {
+    if (book.reads + n < 0) return;
     this.bookService
       .modifyReads(book.isbn, book.reads + n, this.user!)
       .subscribe({
@@ -60,6 +80,7 @@ export class HomeScreenComponent {
   public onCloseModal(): void {
     this.displayModal = false;
     this.displayDeleteModal = false;
+    this.displayInfoModal = false;
     this.selectedBook = undefined;
   }
 
@@ -94,21 +115,21 @@ export class HomeScreenComponent {
   }
 
   public getAllBooks(): void {
-    this.bookService
-      .getAllBooks({ id: 2, username: 'deni', password: '123' })
-      .subscribe({
-        next: (response: Book[]) => {
-          this.books = response;
-
-          // if there are no books make empty true
-          if (response.length === 0) {
-            this.empty = true;
-          }
-        },
-        error: (error: HttpErrorResponse) => {
-          alert('200?');
-        },
-        complete: () => console.log('Fetched all books'),
-      });
+    this.bookService.getAllBooks(this.user!).subscribe({
+      next: (response: Book[]) => {
+        const books = response.filter((book) => {
+          return book.owner === this.user?.username;
+        });
+        this.books = books;
+        // if there are no books make empty true
+        if (books.length === 0) {
+          this.empty = true;
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        alert('200?');
+      },
+      complete: () => console.log('Fetched all books'),
+    });
   }
 }
