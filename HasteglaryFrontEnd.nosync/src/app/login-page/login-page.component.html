@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login and Registration Form</title>
+  </head>
+  <body>
+    <div class="title">Hasteglary</div>
+    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)" id="login-form">
+      <h1>Login</h1>
+      <label for="login-username">Username</label>
+      <input type="text" id="login-username" name="username" ngModel required />
+      <label for="login-password">Password</label>
+      <input
+        type="password"
+        id="login-password"
+        name="password"
+        ngModel
+        required
+      />
+      <input type="submit" value="Login" />
+    </form>
+
+    <form
+      #registrationForm="ngForm"
+      (ngSubmit)="onRegistration(registrationForm)"
+      id="register-form"
+    >
+      <h1>Registration</h1>
+      <label for="register-username">Username</label>
+      <input
+        type="text"
+        id="register-username"
+        name="username"
+        ngModel
+        required
+      />
+      <label for="register-password">Password</label>
+      <input
+        type="password"
+        id="register-password"
+        name="password"
+        ngModel
+        required
+      />
+      <input type="submit" value="Register" />
+    </form>
+  </body>
+</html>

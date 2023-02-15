@@ -10,7 +10,7 @@ body {
   align-items: center;
   font-family: Luminari;
   /* background-image: url("https://aap.cornell.edu/sites/default/files/event/Wadge%20Image_THUMNAIL.jpg"); */
-  background-image: url("../assets/images/background.jpg");
+  background-image: url("../../assets/images/background.jpg");
   background-size: cover;
 }
 

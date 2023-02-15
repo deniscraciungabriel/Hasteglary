@@ -1,17 +1,17 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { Book } from './book';
-import { BookService } from './book.service';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { UserService } from './user.service';
 import { Router } from '@angular/router';
+import { Book } from '../book';
+import { BookService } from '../book.service';
+import { UserService } from '../user.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.css'],
 })
-export class AppComponent implements OnInit {
+export class LoginPageComponent {
   constructor(
     private bookService: BookService,
     private userService: UserService,
@@ -32,6 +32,13 @@ export class AppComponent implements OnInit {
       next: (response: Book[]) => {
         localStorage.setItem('user', JSON.stringify(loginForm.value));
         this.router.navigate(['/home']);
+      },
+      error: (error: HttpErrorResponse) => {
+        // i don't understnad how this can happen
+        if (error.status === 200) {
+          localStorage.setItem('user', JSON.stringify(loginForm.value));
+          this.router.navigate(['/home']);
+        }
       },
     });
   }
