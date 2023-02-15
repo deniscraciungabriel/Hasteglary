@@ -1,0 +1,12 @@
+<button id="modalButton">Open Modal</button>
+
+<div id="bookModal" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="onCloseModal()">&times;</span>
+    <h2>Book Information</h2>
+    <p>Author: {{book?.author}}<span id="bookAuthor"></span></p>
+    <p>Story: {{book?.story}}<span id="bookStory"></span></p>
+    <p>Number of Reads: {{book?.reads}}<span id="bookReads"></span></p>
+    <p>ISBN: {{book?.isbn}}<span id="bookISBN"></span></p>
+  </div>
+</div>

@@ -1,62 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Book Manager</title>
+    <title>Login and Registration Form</title>
   </head>
   <body>
-    <div class="container">
-      <h1>Hasteglary</h1>
-
-      <button class="add-book" (click)="onOpenSaveModal(undefined)">
-        Add Book
-      </button>
-
-      <app-new-book-modal
-        *ngIf="displayModal"
-        (closeModalEvent)="onCloseModal()"
-        (saveBookEvent)="onBookSave($event)"
-        [book]="selectedBook"
-      ></app-new-book-modal>
-
-      <app-delete-modal
-        *ngIf="displayDeleteModal"
-        (closeModalEvent)="onCloseModal()"
-        (deleteBookEvent)="onBookDelete($event)"
-        [book]="selectedBook"
-      ></app-delete-modal>
-
-      <p *ngIf="empty">No books added</p>
-
-      <div class="book-grid">
-        <!--BOOK-->
-        <div *ngFor="let book of books" class="book-square">
-          <img src="../assets/images/bookCover.png" alt="Default Book Cover" />
-          <div class="book-info">
-            <p class="book-name">{{book.title}}</p>
-            <p class="book-author">{{book.author}}</p>
-            <p class="book-count">Reading Count: {{book.reads}}</p>
-            <div class="book-actions">
-              <button class="increase-count" (click)="onAddReads(book, +1)">
-                +
-              </button>
-              <button class="decrease-count" (click)="onAddReads(book, -1)">
-                -
-              </button>
-            </div>
-          </div>
-          <div class="book-actions">
-            <button class="edit-book" (click)="onOpenSaveModal(book)">
-              Edit
-            </button>
-            <button class="delete-book" (click)="onOpenDeleteModal(book)">
-              Delete
-            </button>
-          </div>
-        </div>
-        <!--END BOOK-->
-      </div>
-    </div>
+    <router-outlet></router-outlet>
   </body>
 </html>

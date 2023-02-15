@@ -22,11 +22,12 @@ public class Book implements Serializable{
     private String addedDate;
     private String story;
     private int reads;
+    private String owner;
 
     public Book(){}
 
     // constructor
-    public Book(Long id, String title, String author, String isbn, String addedDate, String deletedDate, String story, int reads) {
+    public Book(Long id, String title, String author, String isbn, String addedDate, String deletedDate, String story, int reads, String owner) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
@@ -34,6 +35,7 @@ public class Book implements Serializable{
         this.addedDate = addedDate;
         this.story = story;
         this.reads = reads;
+        this.owner = owner;
     }
 
     // getters and setters
@@ -83,6 +85,14 @@ public class Book implements Serializable{
 
     public void setReads(int reads) {
         this.reads = reads;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
 }
